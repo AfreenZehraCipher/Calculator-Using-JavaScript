@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+    crossorigin="anonymous"/>
+    <title>Calculator Using JavaScript</title>
+    <style>
+        h4 {font-weight: bold;}
+        button.btn{ font-size: 25px; width: 100%; height: auto;}
+        div.container{ box-shadow: 4px 4px grey;border-radius: 10px;}
+        @media only screen and (min-width: 576px){ div.container { width: 45%; } }
+        @media only screen and (max-width: 575px){ div.container { width: 60%; padding: 15px; } }
+    </style>
+</head>
+<body class="pb-md-4 pb-sm-2" style="background-color: thistle;">
+    <h4 class="text-uppercase text-center my-5">calculator using javascript</h4>
+    <div class="container border border-5 border-dark mt-md-5 p-sm-3 bg-dark">
+        <div class="row">
+            <div class="col-12 my-3 p-0">
+                <input type="text" name="display" id="display" class="form-control border border-3 border-dark p-2"
+                style="font-weight: bold; font-size: 30px; text-align: right;" value="0" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="one" onclick="btnclick('1')">1</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="two" onclick="btnclick('2')">2</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="three" onclick="btnclick('3')">3</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-success btn-block p-2"  id="addi" onclick="operation('+')">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="four" onclick="btnclick('4')">4</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="five" onclick="btnclick('5')">5</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="six" onclick="btnclick('6')">6</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-success btn-block p-2"  id="subt" onclick="operation('-')">-</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="seven" onclick="btnclick('7')">7</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="eight" onclick="btnclick('8')">8</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="nine" onclick="btnclick('9')">9</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-success btn-block p-2"  id="mult" onclick="operation('*')">*</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2 id="point" onclick="btnclick('.')">.</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="zero" onclick="btnclick('0')">0</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-primary btn-block p-2" id="equ" onclick="calculatevalue()">=</button>
+            </div>
+            <div class="col-3 p-0">
+                <button type="button" class="btn btn-success btn-block p-2 id="divi" onclick="operation('/')">/</button>
+            </div>
+        </div>
+
+        <div class="row mb-md-2">
+            <div class="col p-0">
+                <button type="button" class="btn btn-danger btn-block p-2" id="clear" onclick="clr()">Clear</button>
+            </div>
+        </div>
+    </div>    
+</body>
+<script>
+    var display = document.getElementById("display");
+    var pre_input = 0;
+    var result = 0;
+    var count = 0;
+    var popval = 0;
+    function clr(){
+        pre_input = 0;
+        count = 0;
+        display.value = 0;
+    }
+    function calculatevalue(){ 
+        var str = pre_input;
+        popval = pre_input.slice(-1);
+        if ((popval == '-') || (popval == '+') || (popval == '*') || (popval == '/')){
+            pre_input = str;
+            display.value = pre_input;
+        }
+        else{
+            if (count == 1) {
+                display.value = result;
+            }
+            else{
+                try{
+                    result = eval(pre_input);
+                }
+                catch{
+                    display.value = "ERROR";
+                    }
+                //console.log(result);
+                display.value = result;
+                pre_input = 0;
+                count = 1;
+            }
+        }
+    }
+    function btnclick(input){
+        count = 0;        
+        if (result != 0 && (input == "+" || input == "-" || input == "*" || input == "/") ){
+            //console.log("result is not zero " + result);
+            //console.log("Previous input is " + pre_input);
+            pre_input = result + input;
+            //console.log("now previous input is " + pre_input);
+            display.value = pre_input;
+            result = 0;
+        }
+        else if (pre_input == 0){
+            result = 0;
+            //console.log("pre_input "+pre_input);
+            display.value = input;
+            pre_input = display.value;
+            //console.log("input "+pre_input);
+        }
+        else{
+            result = 0;
+            //console.log("\npre_input "+pre_input);
+            pre_input = pre_input + input;
+            display.value = pre_input;
+            //console.log("input "+pre_input);
+        }
+    }
+    function operation(char){
+        if (pre_input == 0){
+            btnclick(char);
+        }
+        else {
+            popval = pre_input.slice(-1);
+            if ((popval == '-') || (popval == '+') || (popval == '*') || (popval == '/')){
+                var str = pre_input.substring(0, pre_input.length - 1);
+                pre_input = str;
+                display.value = pre_input + char;
+            }
+            btnclick(char);
+        }
+    }
+</script>
+</html>
